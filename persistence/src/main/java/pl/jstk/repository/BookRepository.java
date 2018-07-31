@@ -20,7 +20,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     
     //moje
     @Query("select book from BookEntity book where upper(book.id) like concat('%', upper(:id), '%')")
-    List<BookEntity> findBookById(@Param("id") String id);
+    List<BookEntity> findBookById(@Param("id") Long id);
     
     
     

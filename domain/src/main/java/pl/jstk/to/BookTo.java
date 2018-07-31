@@ -1,15 +1,26 @@
 package pl.jstk.to;
 
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import pl.jstk.enumerations.BookStatus;
+
 
 public class BookTo {
     private Long id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String authors;
+    @NotNull
     private BookStatus status;
     
     public BookTo() {
+    	
     }
+    
+    
 
     public BookTo(Long id, String title, String authors, BookStatus status) {
         this.id = id;

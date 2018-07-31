@@ -38,11 +38,20 @@ public class HomeController {
         return ViewNames.WELCOME;
     }
     
-    @GetMapping(value = "/books/add") //czy to nie powinno byc RequestMapping POST ??
+    @GetMapping(value = "/books/add") 
     public String addBook(Model model) {
       model.addAttribute("newBook", new BookTo());
         return ViewNames.ADD_BOOK;
     }
+    
+    
+    @GetMapping(value = "/books/search")
+	public String showSearchView(Model model){
+		
+		model.addAttribute("newBook", new BookTo());
+		return "searchBook";
+		
+	}
     
     
 

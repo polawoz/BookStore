@@ -3,6 +3,7 @@ package pl.jstk.service.impl;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import pl.jstk.entity.BookEntity;
 import pl.jstk.mapper.BookMapper;
@@ -56,8 +57,21 @@ public class BookServiceImpl implements BookService {
     }
     //moje
 	@Override
-	public List<BookTo> findBookById(String id) {
-		// TODO Auto-generated method stub
+	public List<BookTo> findBookById(Long id) {
+		
+
 		return BookMapper.map2To(bookRepository.findBookById(id));
+	}
+
+	@Override
+	public List<BookTo> findBooksByTitleOrAuthor(String title, String authors) {
+		
+		List<BookTo> listByAuthors=findBooksByAuthor(authors);
+		List<BookTo> resultList = listByAuthors.stream()
+				.filter(x-> x.getTitle().toLowerCase().contains(title.toLowerCase()))
+				.collect(Collectors.toList());
+
+		
+		return resultList;
 	}
 }

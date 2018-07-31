@@ -1,14 +1,21 @@
 package pl.jstk.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.jstk.constants.ViewNames;
 import pl.jstk.service.BookService;
+import pl.jstk.to.BookTo;
+import pl.jstk.to.SearchParametersTO;
 
 @Controller
 public class BookSearchController {
@@ -19,26 +26,23 @@ public class BookSearchController {
 	private BookService bookService;
 	
 	
-	//jaki szablon strony?
-	//jakis formularz do wpisywania
-
-
-	@RequestMapping(value = "/books/searchResultByTitle", method = RequestMethod.GET)
-	public String showBooksByTitle(@RequestParam("title") String title, Model model){
+	
+	@RequestMapping(value = "/books/searchByParam", method = RequestMethod.POST)
+	public String showBooksByParameters(@RequestParam(value = "title", required=false, defaultValue="") String title,
+			@RequestParam(value = "authors", required=false, defaultValue="") String authors,
+			Model model){
 		
-		model.addAttribute("bookList", bookService.findBooksByTitle(title));
+		List<BookTo> resultList = bookService.findBooksByTitleOrAuthor(title, authors);
+		
+		model.addAttribute("bookList", resultList);
+
 		return ViewNames.BOOKS;
 		
 	}
 	
+
 	
-	@RequestMapping(value = "/books/searchResultByAuthors", method = RequestMethod.GET)
-	public String showBooksByAuthors(@RequestParam("authors") String authors, Model model){
-		
-		model.addAttribute("bookList", bookService.findBooksByTitle(authors));
-		return ViewNames.BOOKS;
-		
-	}
+	
 	
 	
 }

@@ -2,10 +2,12 @@ package pl.jstk.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +35,7 @@ public class BooksController {
 	
 	
 	@RequestMapping(value = "/books/book", method = RequestMethod.GET)
-	public String showDetails(@RequestParam("id") String bookId, Model model){
+	public String showDetails(@RequestParam("id") Long bookId, Model model){
 		
 		List<BookTo> chosenBookInAList = bookService.findBookById(bookId);
 		
@@ -45,14 +47,50 @@ public class BooksController {
 	}
 		
 	
-//	@GetMapping(value = "/books")
-//	public String booksPage(Model model) {
-//// tu wywolac metode ktora zwraca liste ksiazek??
+//	@RequestMapping(value="/greeting", method=RequestMethod.POST)
+//	public String showViewAfterAddingBook(@RequestParam("title") @Valid String title, 
+//			@RequestParam("authors") @Valid String authors,
+//			@RequestParam("status") @Valid BookStatus status,
+//			Model model){
+//
 //		
-////        model.addAttribute(ModelConstants.MESSAGE, WELCOME);
-////        model.addAttribute(ModelConstants.INFO, INFO_TEXT);
+//		BookTo newBook = new BookTo(null, title, authors, status);
+//		
+//		bookService.saveBook(newBook);
+//		
+//		model.addAttribute("bookList", bookService.findAllBooks());
+//		
 //		return ViewNames.BOOKS;
+//		
 //	}
+	
+	
+	
+	@RequestMapping(value="/greeting", method=RequestMethod.POST)
+	public String showViewAfterAddingBook(@ModelAttribute("newBook") @Valid BookTo newBook,
+			Model model){
+	
+		
+		bookService.saveBook(newBook);
+		
+		model.addAttribute("bookList", bookService.findAllBooks());
+		
+		return ViewNames.BOOKS;
+		
+	}
+	
+	
+	@RequestMapping(value="/books/delete", method=RequestMethod.GET)
+	public String showViewAfterDeletingBook(@RequestParam("id") Long bookId, Model model){
+		
+		bookService.deleteBook(bookId);
+		model.addAttribute("bookList", bookService.findAllBooks());
+		
+		return ViewNames.BOOKS;		
+	}
+	
+	
+
 
 
 
