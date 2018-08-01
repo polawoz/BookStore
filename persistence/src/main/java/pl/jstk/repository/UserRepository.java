@@ -13,5 +13,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	@Query("select user from UserEntity user where upper(user.userName) like concat(upper(:name), '%')")
 	List<UserEntity> findUsersByName(@Param("name") String name);
+	
+	
+	
 
 }

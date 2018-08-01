@@ -1,12 +1,19 @@
 package pl.jstk.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +24,7 @@ import pl.jstk.service.BookService;
 import pl.jstk.to.BookTo;
 
 @Controller
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class BooksController {
 	
 	
@@ -64,7 +72,7 @@ public class BooksController {
 //		
 //	}
 	
-	
+
 	
 	@RequestMapping(value="/greeting", method=RequestMethod.POST)
 	public String showViewAfterAddingBook(@ModelAttribute("newBook") @Valid BookTo newBook,
@@ -79,12 +87,14 @@ public class BooksController {
 		
 	}
 	
-	
+	@Secured(value = "ROLE_ADMIN")
+	//@PreAuthorize(value = "hasRole('ADMIN')")
 	@RequestMapping(value="/books/delete", method=RequestMethod.GET)
 	public String showViewAfterDeletingBook(@RequestParam("id") Long bookId, Model model){
 		
 		bookService.deleteBook(bookId);
 		model.addAttribute("bookList", bookService.findAllBooks());
+		model.addAttribute("deleted", "yes");
 		
 		return ViewNames.BOOKS;		
 	}

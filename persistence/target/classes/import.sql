@@ -6,3 +6,4 @@ insert into book (id, title, authors, status) values (5, 'Z kamerą wśród prog
 
 insert into user (id, user_name, password) values (1, 'admin', 'admin');
 insert into user (id, user_name, password) values (2, 'user', 'user');
+

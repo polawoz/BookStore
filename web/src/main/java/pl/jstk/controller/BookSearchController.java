@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.jstk.constants.ViewNames;
 import pl.jstk.service.BookService;
 import pl.jstk.to.BookTo;
-import pl.jstk.to.SearchParametersTO;
+
 
 @Controller
 public class BookSearchController {

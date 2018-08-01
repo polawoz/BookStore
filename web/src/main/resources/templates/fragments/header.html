@@ -18,11 +18,28 @@
                     <li>
                         <a th:href="@{/books}">Books</a>
                     </li>
+                    
+                    <li>
+                        <a th:href="@{/books/add}">Add book</a>
+                    </li>
+                    
+                    <li>
+                        <a th:href="@{/books/search}">Search</a>
+                    </li>
+                    
                 </ul>
+                      
                 <ul class="nav navbar-nav navbar-right">
-                    <li  style="display: inline-block;">
+                    
+                    
+                     <li style="color: #848484" sec:authorize="isAuthenticated()">Signed in as: </li>
+                     <li style="color: #848484" sec:authentication="name" sec:authorize="isAuthenticated()"></li>
+                    
+                    <li  style="display: inline-block;" sec:authorize="isAuthenticated()"> 
                         <a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
-                    <li  style="display: inline-block;"><a th:href="@{/login}"><span
+                    
+                    <li  style="display: inline-block;" sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}"><span
                             class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
             </div>

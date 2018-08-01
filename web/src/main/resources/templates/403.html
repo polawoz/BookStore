@@ -11,7 +11,17 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Error</h1>
-            <p>${error}</p>
+            <p th:text = "${error}"></p>
+            
+            <p>
+                <a th:href="@{'/'}" class="btn btn-default">
+                    <span class="glyphicon-hand-left glyphicon"></span> return to Home Page
+                </a>
+
+            </p>
+            
+            
+            
         </div>
     </div>
 </section>
