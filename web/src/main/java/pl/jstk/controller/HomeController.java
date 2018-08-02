@@ -27,10 +27,7 @@ public class HomeController {
 		return ViewNames.LOGIN;
 	}
 
-	// @GetMapping(value = "/logout")
-	// public String logout(Model model) {
-	// return ViewNames.WELCOME;
-	// }
+
 
 	@GetMapping(value = "/books/add")
 	public String addBook(Model model) {

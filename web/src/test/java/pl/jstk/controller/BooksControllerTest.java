@@ -187,7 +187,7 @@ public class BooksControllerTest {
 		ResultActions resultActions = mockMvc.perform(post("/greeting"));
 
 		// then
-		Mockito.verify(bookServiceMock, Mockito.times(0)).saveBook(null);
+		Mockito.verify(bookServiceMock, Mockito.times(0)).saveBook(Mockito.any());
 		resultActions.andExpect(status().is4xxClientError());
 
 	}
@@ -206,6 +206,22 @@ public class BooksControllerTest {
 
 		Mockito.verify(bookServiceMock, Mockito.times(1)).saveBook(Mockito.any());
 		resultActions.andExpect(status().isOk()).andExpect(view().name("books"));
+
+	}
+	
+	@Test
+	public void testShouldNotAddBookByAnonymous() throws Exception {
+
+		// given when
+
+		ResultActions resultActions = mockMvc
+				.perform(post("/greeting").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("title", "Nowa ksiazka").param("authors", "Author").param("status", "FREE"));
+
+		// then
+
+		Mockito.verify(bookServiceMock, Mockito.times(0)).saveBook(Mockito.any());
+		resultActions.andExpect(status().is3xxRedirection());
 
 	}
 
