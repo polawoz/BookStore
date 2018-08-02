@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @Controller
 public class HomeController {
 
@@ -22,18 +21,16 @@ public class HomeController {
 		return ViewNames.WELCOME;
 	}
 
-	
-	
 	@GetMapping(value = "/login")
 	public String login(Model model) {
 
 		return ViewNames.LOGIN;
 	}
 
-	@GetMapping(value = "/logout")
-	public String logout(Model model) {
-		return ViewNames.WELCOME;
-	}
+	// @GetMapping(value = "/logout")
+	// public String logout(Model model) {
+	// return ViewNames.WELCOME;
+	// }
 
 	@GetMapping(value = "/books/add")
 	public String addBook(Model model) {
@@ -48,17 +45,13 @@ public class HomeController {
 		return "searchBook";
 
 	}
-	
-	
-	@GetMapping(value="/403")
-	public String show403Error(Model model){
-		
-		model.addAttribute("error", "You have no access to this resource!"); 
+
+	@GetMapping(value = "/403")
+	public String show403Error(Model model) {
+
+		model.addAttribute("error", "You have no access to this resource!");
 		return "/403";
-		
+
 	}
-	
-	
-	
 
 }
